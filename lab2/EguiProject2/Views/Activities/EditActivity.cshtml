@@ -43,20 +43,32 @@
     <label for="room">Group: </label>
     <select name="group" class="form-control" required>
         @foreach(var x in Model.groups){
-            <option value="@x">@x</option>
+            @if(act is not null && act.group == x){
+                <option value="@x" selected>@x</option>
+            }else{
+                <option value="@x">@x</option>
+            }
         }
     </select>
 
     <label for="Teacher">Teacher: </label>
     <select name="teacher" class="form-control" required>
         @foreach(var x in Model.teachers){
-            <option value="@x">@x</option>
+            @if(act is not null && act.teacher == x){
+                <option value="@x" selected>@x</option>
+            }else{
+                <option value="@x">@x</option>
+            }
         }
     </select>
     <label for="Topic">Topic: </label>
     <select name="topic" class="form-control" required>
         @foreach(var x in Model.classes){
-            <option value="@x">@x</option>
+            @if(act is not null && act.@class == x){
+                <option value="@x" selected>@x</option>
+            }else{
+                <option value="@x">@x</option>
+            }
         }
     </select>
 

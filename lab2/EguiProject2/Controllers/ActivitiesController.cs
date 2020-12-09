@@ -22,7 +22,7 @@ namespace EguiProject2.Controllers
             ViewData["Hours"] = ActivityStorage.Hours;
             ViewData["Days"] = ActivityStorage.Days;
             ViewData["Rooms"] = Data.rooms;
-            if(room is not null){
+            if(room is not null && Data.rooms.Exists(x => x == room)){
                 ViewData["CurrentRoom"] = room;
             }
             else{

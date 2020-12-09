@@ -61,8 +61,8 @@
             }
         }
     </select>
-    <label for="Topic">Topic: </label>
-    <select name="topic" class="form-control" required>
+    <label for="Class">Class: </label>
+    <select name="class" class="form-control" required>
         @foreach(var x in Model.classes){
             @if(act is not null && act.@class == x){
                 <option value="@x" selected>@x</option>

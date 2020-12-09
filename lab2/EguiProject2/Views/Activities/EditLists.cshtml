@@ -1,9 +1,10 @@
 @{
     ViewData["Title"] = "Edit Lists";
 }
+@model ActivityStorage
 <div class="row">
-    @await Html.PartialAsync("_EditListPartial", new Tuple<string, List<string>>("Rooms", (List<string>)ViewData["Rooms"]))
-    @await Html.PartialAsync("_EditListPartial", new Tuple<string, List<string>>("Groups", (List<string>)ViewData["Groups"]))
-    @await Html.PartialAsync("_EditListPartial", new Tuple<string, List<string>>("Teachers", (List<string>)ViewData["Teachers"]))
-    @await Html.PartialAsync("_EditListPartial", new Tuple<string, List<string>>("Topics", (List<string>)ViewData["Topics"]))
+    @await Html.PartialAsync("_EditListPartial", new Tuple<string, List<string>>("Rooms", Model.rooms))
+    @await Html.PartialAsync("_EditListPartial", new Tuple<string, List<string>>("Groups", Model.groups))
+    @await Html.PartialAsync("_EditListPartial", new Tuple<string, List<string>>("Teachers", Model.teachers))
+    @await Html.PartialAsync("_EditListPartial", new Tuple<string, List<string>>("Classes", Model.classes))
 </div>

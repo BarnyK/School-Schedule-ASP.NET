@@ -62,12 +62,14 @@
 </div>
 <script>
     var currentRoom = '@ViewData["CurrentRoom"]';
+    @* Check if there is room defined, if not  *@
     if(currentRoom){
+        @* Changing room with change of select *@
         $("#room-selector").change(function(){
             let act = $("#room-selector-form").attr("action");
             window.location.href = act + '?room=' + $("#room-selector")[0].value;
         });
-
+        @* Double click for table cells *@
         $(".plan-table-body").dblclick(function(event){
             let day = event.target.attributes["data-day"].value;
             let hour = event.target.attributes["data-slot"].value;

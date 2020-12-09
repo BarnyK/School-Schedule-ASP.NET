@@ -12,13 +12,13 @@ namespace EguiProject2.Models
         public string room{ get; set; }
         public string @class{ get; set; }
         
-        public Activit(string room, int day, int slot, string group, string teacher, string topic){
+        public Activit(string room, int day, int slot, string group, string teacher, string @class){
             this.room = room;
             this.day = day;
             this.slot = slot;
             this.group = group;
             this.teacher = teacher;
-            this.@class = topic;
+            this.@class = @class;
         }
     }
 }

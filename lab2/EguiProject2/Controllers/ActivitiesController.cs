@@ -44,12 +44,14 @@ namespace EguiProject2.Controllers
             ViewData["Rooms"] = Data.rooms;
             ViewData["Groups"] = Data.groups;
             ViewData["Teachers"] = Data.teachers;
-            ViewData["Topics"] = Data.classes;
-            return View();
+            ViewData["Classes"] = Data.classes;
+            return View(Data);
         }
 
         [HttpPost]
         public IActionResult AddToList(string list, string text){
+            // Action for adding elements to lists
+            // Using switch statement uses correct list
             switch (list){
                 case "Rooms":
                     if(!Data.rooms.Exists(x => x == text))
@@ -63,7 +65,7 @@ namespace EguiProject2.Controllers
                     if(!Data.teachers.Exists(x => x == text))
                         Data.teachers.Add(text);
                     break;
-                case "Topics":
+                case "Classes":
                     if(!Data.classes.Exists(x => x == text))
                         Data.classes.Add(text);
                     break;
@@ -74,6 +76,7 @@ namespace EguiProject2.Controllers
         }
         [HttpPost]
         public IActionResult RemoveFromList(string list, string listItem){
+            // Action for removing elements from lists
             switch (list){
                 case "Rooms":
                     Data.rooms.Remove(listItem);
@@ -84,7 +87,7 @@ namespace EguiProject2.Controllers
                 case "Teachers":
                     Data.teachers.Remove(listItem);
                     break;
-                case "Topics":
+                case "Classes":
                     Data.classes.Remove(listItem);
                     break;
                 default:
@@ -112,8 +115,8 @@ namespace EguiProject2.Controllers
         }
 
         [HttpPost]
-        public IActionResult EditActivity(int slot, int day, string room, string group, string teacher, string topic){
-            Data.EditOrAddActivity(room,day,slot,group,teacher,topic);
+        public IActionResult EditActivity(int slot, int day, string room, string group, string teacher, string @class){
+            Data.EditOrAddActivity(room,day,slot,group,teacher,@class);
             return RedirectToAction("Index", new { room=room});
         }
 
@@ -131,6 +134,7 @@ namespace EguiProject2.Controllers
 
         [HttpPost]
         public FileContentResult ExportData(){
+            // Action for exporting data
             byte[] jsonBytes = Data.ExportBytes();
             FileContentResult x = new FileContentResult(jsonBytes, "plain/text");
             x.FileDownloadName = "data.json";
@@ -139,7 +143,8 @@ namespace EguiProject2.Controllers
         
         [HttpPost]
         public IActionResult ImportData(IFormFile file){
-            string result = "";
+            // Action for importing data through browser
+            string result;
             if(file is not null){
                 using( var reader = new StreamReader(file.OpenReadStream())){
                     result = reader.ReadToEnd();

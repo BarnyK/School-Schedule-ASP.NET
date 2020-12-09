@@ -80,13 +80,13 @@ namespace EguiProject2.Models
             return null;
         }
 
-        public void EditOrAddActivity(string room, int day, int slot, string group, string teacher, string topic){
+        public void EditOrAddActivity(string room, int day, int slot, string group, string teacher, string @class){
              int i = GetActivityIndex(room, day, slot);
              if(i != -1){
-                 activities[i] = new Activit(room,day,slot,group,teacher,topic);
+                 activities[i] = new Activit(room,day,slot,group,teacher,@class);
              }
              else{
-                 activities.Add(new Activit(room,day,slot,group,teacher,topic));
+                 activities.Add(new Activit(room,day,slot,group,teacher,@class));
              }
         }
 

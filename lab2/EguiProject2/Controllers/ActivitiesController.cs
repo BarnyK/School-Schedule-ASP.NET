@@ -37,6 +37,7 @@ namespace EguiProject2.Controllers
             return View();
         }
 
+        [HttpGet]
         public IActionResult EditLists(){
             ViewData["Rooms"] = Data.Rooms;
             ViewData["Groups"] = Data.Groups;

@@ -19,14 +19,14 @@ namespace EguiProject2.Models
         public List<string> groups{get;set;}
         public List<string> teachers{get;set;}
         public List<string> classes{get;set;}
-        public List<Activit> activities{get;set;}
+        public List<Activity> activities{get;set;}
 
         public ActivityStorage(){
             rooms = new List<string>();
             groups = new List<string>();
             teachers = new List<string>();
             classes = new List<string>();
-            activities = new List<Activit>();
+            activities = new List<Activity>();
         }
 
         public bool ImportDataFromJson(string text){
@@ -47,9 +47,9 @@ namespace EguiProject2.Models
             return JsonSerializer.SerializeToUtf8Bytes(this);
         }
 
-        public Activit[,] GetRoomMatrix(string room){
-            Activit[,] matrix = new Activit[5,9];
-            Activit x;
+        public Activity[,] GetRoomMatrix(string room){
+            Activity[,] matrix = new Activity[5,9];
+            Activity x;
             if(rooms.Exists(x => x == room)){
                 for(int i=0; i < activities.Count ;i++){
                     x = activities[i];
@@ -62,7 +62,7 @@ namespace EguiProject2.Models
         }
 
         public int GetActivityIndex(string room, int day, int slot){
-            Activit x;
+            Activity x;
             for(int i=0; i < activities.Count ;i++){
                     x = activities[i];
                     if(x.room == room && x.day == day && x.slot == slot){
@@ -72,7 +72,7 @@ namespace EguiProject2.Models
             return -1;
         }
 
-        public Activit GetActivity(string room, int day, int slot){
+        public Activity GetActivity(string room, int day, int slot){
             int i = GetActivityIndex(room, day, slot);
             if(i != -1){
                 return activities[i];
@@ -83,10 +83,10 @@ namespace EguiProject2.Models
         public void EditOrAddActivity(string room, int day, int slot, string group, string teacher, string @class){
              int i = GetActivityIndex(room, day, slot);
              if(i != -1){
-                 activities[i] = new Activit(room,day,slot,group,teacher,@class);
+                 activities[i] = new Activity(room,day,slot,group,teacher,@class);
              }
              else{
-                 activities.Add(new Activit(room,day,slot,group,teacher,@class));
+                 activities.Add(new Activity(room,day,slot,group,teacher,@class));
              }
         }
 

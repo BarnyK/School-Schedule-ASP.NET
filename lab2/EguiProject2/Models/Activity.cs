@@ -3,8 +3,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace EguiProject2.Models
 {
-    public class Activit{
-        // Activity model (Called Activit to avoid colission with Activity)
+    public class Activity{
+        // Activity model 
         public int slot{ get; set; }
         public int day{ get; set; }
         public string teacher{ get; set; }
@@ -12,7 +12,7 @@ namespace EguiProject2.Models
         public string room{ get; set; }
         public string @class{ get; set; }
         
-        public Activit(string room, int day, int slot, string group, string teacher, string @class){
+        public Activity(string room, int day, int slot, string group, string teacher, string @class){
             this.room = room;
             this.day = day;
             this.slot = slot;

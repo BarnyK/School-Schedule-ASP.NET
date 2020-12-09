@@ -1,0 +1,11 @@
+@model string
+@using (Html.BeginForm(
+    "AddToList",
+    "Activities",
+    FormMethod.Post,
+    new {@class="form-group"}
+    )){
+        <input type="hidden" name="list" value="@Model">
+        <input type="text" name="text">
+        <input type="submit" value="Add">
+    }

@@ -1,0 +1,78 @@
+@{
+    ViewData["Title"] = "Planner";
+    var rooms = ViewData["Rooms"] as List<string>;
+    var hours = ViewData["Hours"] as List<string>;
+    var days = ViewData["Days"] as List<string>;
+    var room = ViewData["CurrentRoom"] as string;
+    var activities = ViewData["Activities"] as Activit[,];
+}
+
+<div class="form-group" id="selector">
+    <form id="room-selector-form" asp-controller="activities" asp-action="Index"> 
+        <label for="room-selector">
+            Room:
+        </label>
+        <select id="room-selector"  class="form-control">
+            @for(var i = 0; i < rooms.Count ; i++){
+                if(rooms[i] == (string)ViewData["CurrentRoom"]){
+                    <option selected="" value="@rooms[i]">@rooms[i]</option>
+                }
+                else{
+                    <option value="@rooms[i]">@rooms[i]</option>
+                }
+            }
+        </select>
+    </form>
+</div>
+
+@if(room == ""){
+    <p class="no-rooms-error">
+        Please add rooms before proceading
+    </p>
+}
+
+<div class="plan-table">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                @for(var d=0; d < days.Count; d++){
+                    <th scope="col">@days[d]</th>
+                }
+            </tr>
+        </thead>
+        <tbody class="plan-table-body">
+            @for(var h = 0; h < hours.Count; h++){
+                <tr>
+                    <th scope="row">@hours[h]</th>
+                    @for(var d = 0; d < 5; d++){
+                        <td 
+                            data-day="@d"
+                            data-slot="@h"
+                        >
+                        @if(activities[d,h] is not null){
+                            @activities[d,h].Group
+                        }
+                        </td>
+                    }
+                </tr>
+            } 
+        </tbody>
+    </table>
+</div>
+<script>
+    var currentRoom = '@ViewData["CurrentRoom"]';
+    if(currentRoom){
+        $("#room-selector").change(function(){
+            let act = $("#room-selector-form").attr("action");
+            window.location.href = act + '?room=' + $("#room-selector")[0].value;
+        });
+
+        $(".plan-table-body").dblclick(function(event){
+            let day = event.target.attributes["data-day"].value;
+            let hour = event.target.attributes["data-slot"].value;
+            console.log(`${day},${hour}`);
+            window.location.href = `/Activities/EditActivity?day=${day}&slot=${hour}&room=${currentRoom}`
+        });
+    }
+</script>

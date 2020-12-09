@@ -1,0 +1,73 @@
+@{
+    ViewData["Title"] = "Edit Activity";
+    var act = ViewData["Activity"] as Activit;
+}
+@model ActivityStorage
+
+
+@using (Html.BeginForm(
+    "RemoveActivity",
+    "Activities",
+    FormMethod.Post,
+    new {@class="form-group edit-activity"}
+)){
+    <button type="button" id="go-back-button" class="btn btn-dark" onclick="goBack()">Go back</button>
+    @if(act is null){
+        <button type="submit" class="btn btn-danger" disabled>Remove</button>
+    }
+    else{
+        <input type="hidden" name="room" value="@act.Room">
+        <input type="hidden" name="day" value="@act.Day">
+        <input type="hidden" name="slot" value="@act.Slot">
+        <button type="submit" class="btn btn-danger">Remove</button>
+    }
+    <button type="button" id="add-act-button" class="btn btn-success" onclick="addActivity()">Add</button>
+}
+
+
+@using (Html.BeginForm(
+    "EditActivity",
+    "Activities",
+    FormMethod.Post,
+    new {@class="form-group edit-activity", @id="edit-activity-form"}
+)){
+    <input type="hidden" name="room" value="@ViewData["Room"]">
+    <input type="hidden" name="slot" value="@ViewData["Slot"]">
+    <input type="hidden" name="day" value="@ViewData["DayId"]">
+    <label for="room">Room: </label>
+    <input class="form-control" type="text" value="@ViewData["Room"]" disabled>
+    <label>Hours: </label>
+    <input class="form-control" type="text" value="@ViewData["Hour"]" disabled>
+    <label>Day: </label>
+    <input class="form-control" type="text" value="@ViewData["Day"]" disabled>
+    <label for="room">Group: </label>
+    <select name="group" class="form-control" required>
+        @foreach(var x in Model.Groups){
+            <option value="@x">@x</option>
+        }
+    </select>
+
+    <label for="Teacher">Teacher: </label>
+    <select name="teacher" class="form-control" required>
+        @foreach(var x in Model.Teachers){
+            <option value="@x">@x</option>
+        }
+    </select>
+    <label for="Topic">Topic: </label>
+    <select name="topic" class="form-control" required>
+        @foreach(var x in Model.Topics){
+            <option value="@x">@x</option>
+        }
+    </select>
+
+}
+
+<script>
+    $("#go-back-button").click(function(){
+        window.location.href = "/Activities/Index?room=@ViewData["room"]";
+    });
+
+    $("#add-act-button").click(function(){
+        $("#edit-activity-form").submit();
+    })
+</script>

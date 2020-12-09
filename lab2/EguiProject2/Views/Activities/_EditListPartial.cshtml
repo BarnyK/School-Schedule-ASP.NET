@@ -1,0 +1,29 @@
+@model Tuple<string, List<string>>
+<div class="col-sm">
+    <h3>@Model.Item1</h3>
+    @using (Html.BeginForm(
+        "AddToList",
+        "Activities",
+        FormMethod.Post,
+        new {@class="form-group edit-lists"}
+    )){
+            <input type="hidden" name="list" value="@Model.Item1">
+            <input type="text" name="text" placeholder="Add..." required="required">
+            <input type="submit" value="Add">
+    }
+    @using (Html.BeginForm(
+        "RemoveFromList",
+        "Activities",
+        FormMethod.Post,
+        new {@class="form-group edit-lists"}
+    )){
+        <input type="hidden" name="list" value="@Model.Item1">
+        <label for="listItem">Select to remove</label>
+        <input type="submit" value="Remove"><br>
+        <select name="listItem" size="20" required="required">
+            @foreach(var item in Model.Item2){
+                <option value="@item">@item</option>
+            }
+        </select>
+    }
+</div>

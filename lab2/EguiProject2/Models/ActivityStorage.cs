@@ -15,28 +15,28 @@ namespace EguiProject2.Models
         static public List<string> Days = new List<string>(){
             "Monday","Tuesday","Wednesday","Thursday","Friday"
         };
-        public List<string> Rooms{get;set;}
-        public List<string> Groups{get;set;}
-        public List<string> Teachers{get;set;}
-        public List<string> Topics{get;set;}
-        public List<Activit> Activities{get;set;}
+        public List<string> rooms{get;set;}
+        public List<string> groups{get;set;}
+        public List<string> teachers{get;set;}
+        public List<string> classes{get;set;}
+        public List<Activit> activities{get;set;}
 
         public ActivityStorage(){
-            Rooms = new List<string>();
-            Groups = new List<string>();
-            Teachers = new List<string>();
-            Topics = new List<string>();
-            Activities = new List<Activit>();
+            rooms = new List<string>();
+            groups = new List<string>();
+            teachers = new List<string>();
+            classes = new List<string>();
+            activities = new List<Activit>();
         }
 
         public bool ImportDataFromJson(string text){
             try{
                 ActivityStorage x = JsonSerializer.Deserialize<ActivityStorage>(text);
-                Rooms = x.Rooms;
-                Groups = x.Groups;
-                Teachers = x.Teachers;
-                Topics = x.Topics;
-                Activities = x.Activities;
+                rooms = x.rooms;
+                groups = x.groups;
+                teachers = x.teachers;
+                classes = x.classes;
+                activities = x.activities;
                 return true;
             }catch(Exception){
                 return false;
@@ -50,11 +50,11 @@ namespace EguiProject2.Models
         public Activit[,] GetRoomMatrix(string room){
             Activit[,] matrix = new Activit[5,9];
             Activit x;
-            if(Rooms.Exists(x => x == room)){
-                for(int i=0; i < Activities.Count ;i++){
-                    x = Activities[i];
-                    if(x.Room == room){
-                        matrix[x.Day,x.Slot] = x;
+            if(rooms.Exists(x => x == room)){
+                for(int i=0; i < activities.Count ;i++){
+                    x = activities[i];
+                    if(x.room == room){
+                        matrix[x.day,x.slot] = x;
                     }
                 }
             }
@@ -63,9 +63,9 @@ namespace EguiProject2.Models
 
         public int GetActivityIndex(string room, int day, int slot){
             Activit x;
-            for(int i=0; i < Activities.Count ;i++){
-                    x = Activities[i];
-                    if(x.Room == room && x.Day == day && x.Slot == slot){
+            for(int i=0; i < activities.Count ;i++){
+                    x = activities[i];
+                    if(x.room == room && x.day == day && x.slot == slot){
                         return i;
                     }
                 }
@@ -75,7 +75,7 @@ namespace EguiProject2.Models
         public Activit GetActivity(string room, int day, int slot){
             int i = GetActivityIndex(room, day, slot);
             if(i != -1){
-                return Activities[i];
+                return activities[i];
             }
             return null;
         }
@@ -83,17 +83,17 @@ namespace EguiProject2.Models
         public void EditOrAddActivity(string room, int day, int slot, string group, string teacher, string topic){
              int i = GetActivityIndex(room, day, slot);
              if(i != -1){
-                 Activities[i] = new Activit(room,day,slot,group,teacher,topic);
+                 activities[i] = new Activit(room,day,slot,group,teacher,topic);
              }
              else{
-                 Activities.Add(new Activit(room,day,slot,group,teacher,topic));
+                 activities.Add(new Activit(room,day,slot,group,teacher,topic));
              }
         }
 
         public void RemoveActivity(string room, int day, int slot){
             int i = GetActivityIndex(room, day, slot);
             if(i != -1){
-                Activities.RemoveAt(i);
+                activities.RemoveAt(i);
             }
         }
     

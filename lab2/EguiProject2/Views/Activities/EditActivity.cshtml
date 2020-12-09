@@ -16,9 +16,9 @@
         <button type="submit" class="btn btn-danger" disabled>Remove</button>
     }
     else{
-        <input type="hidden" name="room" value="@act.Room">
-        <input type="hidden" name="day" value="@act.Day">
-        <input type="hidden" name="slot" value="@act.Slot">
+        <input type="hidden" name="room" value="@act.room">
+        <input type="hidden" name="day" value="@act.day">
+        <input type="hidden" name="slot" value="@act.slot">
         <button type="submit" class="btn btn-danger">Remove</button>
     }
     <button type="button" id="add-act-button" class="btn btn-success" onclick="addActivity()">Add</button>
@@ -42,20 +42,20 @@
     <input class="form-control" type="text" value="@ViewData["Day"]" disabled>
     <label for="room">Group: </label>
     <select name="group" class="form-control" required>
-        @foreach(var x in Model.Groups){
+        @foreach(var x in Model.groups){
             <option value="@x">@x</option>
         }
     </select>
 
     <label for="Teacher">Teacher: </label>
     <select name="teacher" class="form-control" required>
-        @foreach(var x in Model.Teachers){
+        @foreach(var x in Model.teachers){
             <option value="@x">@x</option>
         }
     </select>
     <label for="Topic">Topic: </label>
     <select name="topic" class="form-control" required>
-        @foreach(var x in Model.Topics){
+        @foreach(var x in Model.classes){
             <option value="@x">@x</option>
         }
     </select>

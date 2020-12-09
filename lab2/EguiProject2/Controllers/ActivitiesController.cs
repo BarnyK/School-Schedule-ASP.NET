@@ -14,18 +14,20 @@ namespace EguiProject2.Controllers
     public class ActivitiesController : Controller
     {
         static private ActivityStorage Data = new ActivityStorage();
+
+        [HttpGet]
         public IActionResult Index(string room)
         {
             // View of table
             ViewData["Hours"] = ActivityStorage.Hours;
             ViewData["Days"] = ActivityStorage.Days;
-            ViewData["Rooms"] = Data.Rooms;
+            ViewData["Rooms"] = Data.rooms;
             if(room is not null){
                 ViewData["CurrentRoom"] = room;
             }
             else{
-                if(Data.Rooms.Count > 0){
-                    ViewData["CurrentRoom"] = Data.Rooms[0];
+                if(Data.rooms.Count > 0){
+                    ViewData["CurrentRoom"] = Data.rooms[0];
                 }
                 else{
                     // Signals to view that there is no rooms
@@ -39,10 +41,10 @@ namespace EguiProject2.Controllers
 
         [HttpGet]
         public IActionResult EditLists(){
-            ViewData["Rooms"] = Data.Rooms;
-            ViewData["Groups"] = Data.Groups;
-            ViewData["Teachers"] = Data.Teachers;
-            ViewData["Topics"] = Data.Topics;
+            ViewData["Rooms"] = Data.rooms;
+            ViewData["Groups"] = Data.groups;
+            ViewData["Teachers"] = Data.teachers;
+            ViewData["Topics"] = Data.classes;
             return View();
         }
 
@@ -50,20 +52,20 @@ namespace EguiProject2.Controllers
         public IActionResult AddToList(string list, string text){
             switch (list){
                 case "Rooms":
-                    if(!Data.Rooms.Exists(x => x == text))
-                        Data.Rooms.Add(text);
+                    if(!Data.rooms.Exists(x => x == text))
+                        Data.rooms.Add(text);
                     break;
                 case "Groups":
-                    if(!Data.Groups.Exists(x => x == text))
-                        Data.Groups.Add(text);
+                    if(!Data.groups.Exists(x => x == text))
+                        Data.groups.Add(text);
                     break;
                 case "Teachers":
-                    if(!Data.Teachers.Exists(x => x == text))
-                        Data.Teachers.Add(text);
+                    if(!Data.teachers.Exists(x => x == text))
+                        Data.teachers.Add(text);
                     break;
                 case "Topics":
-                    if(!Data.Topics.Exists(x => x == text))
-                        Data.Topics.Add(text);
+                    if(!Data.classes.Exists(x => x == text))
+                        Data.classes.Add(text);
                     break;
                 default:
                     break;
@@ -74,16 +76,16 @@ namespace EguiProject2.Controllers
         public IActionResult RemoveFromList(string list, string listItem){
             switch (list){
                 case "Rooms":
-                    Data.Rooms.Remove(listItem);
+                    Data.rooms.Remove(listItem);
                     break;
                 case "Groups":
-                    Data.Groups.Remove(listItem);
+                    Data.groups.Remove(listItem);
                     break;
                 case "Teachers":
-                    Data.Teachers.Remove(listItem);
+                    Data.teachers.Remove(listItem);
                     break;
                 case "Topics":
-                    Data.Topics.Remove(listItem);
+                    Data.classes.Remove(listItem);
                     break;
                 default:
                     break;
@@ -98,7 +100,7 @@ namespace EguiProject2.Controllers
                 ViewData["Day"] = ActivityStorage.Days[day];
                 ViewData["Slot"] = slot;
                 ViewData["Hour"] = ActivityStorage.Hours[slot];
-                if(!Data.Rooms.Exists(x => x == room))
+                if(!Data.rooms.Exists(x => x == room))
                     throw new Exception();
                 ViewData["Room"] = room;
             }catch(Exception){
@@ -147,7 +149,7 @@ namespace EguiProject2.Controllers
             return Redirect("/Activities/Index");
         }
 
-        public IActionResult ErrorView(string message){
+        public IActionResult ErrorView(){
             return View();
         }
         

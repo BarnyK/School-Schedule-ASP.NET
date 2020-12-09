@@ -35,7 +35,7 @@ namespace EguiProject2
             }
             else
             {
-                app.UseExceptionHandler("/Activities/ErrorView");
+                app.UseExceptionHandler("/Activities/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
